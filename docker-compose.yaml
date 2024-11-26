@@ -9,7 +9,7 @@ x-common-service: &common-service
 
 services:
   playwright-service:
-    build: apps/playwright-service
+    build: apps/playwright-service-ts
     environment:
       - PORT=3000
       - PROXY_SERVER=${PROXY_SERVER}
@@ -49,10 +49,19 @@ services:
     depends_on:
       - redis
       - playwright-service
-    ports:
-      - "3002:3002"
+    # ports:
+    #   - "3002:3002"
     command: [ "pnpm", "run", "start:production" ]
-
+  proxy:
+      image: nginx:latest
+      ports:
+        - "3002:80"
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+      depends_on:
+        - api
+      networks:
+        - backend
   worker:
     <<: *common-service
     environment:
