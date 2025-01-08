@@ -354,7 +354,7 @@ export class WebCrawler {
   private isSocialMediaOrEmail(url: string): boolean {
     const socialMediaOrEmail = [
       "facebook.com",
-      "twitter.com",
+      // "twitter.com",
       "linkedin.com",
       "instagram.com",
       "pinterest.com",
